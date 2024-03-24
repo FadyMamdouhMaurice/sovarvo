@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyD5PqCCJpGaNHWF6x5IQcxpV-T0jbb-FGQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>226543086616</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.webProject</string>
+	<key>PROJECT_ID</key>
+	<string>sovarvo-40099</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sovarvo-40099.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:226543086616:ios:65d9e4b531eca91b92a76d</string>
+</dict>
+</plist>
