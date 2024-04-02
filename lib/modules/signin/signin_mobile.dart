@@ -1,3 +1,5 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:Sovarvo/layout/home_Screen_mobile.dart';
@@ -156,9 +158,77 @@ class _SignInMobileState extends State<SignInMobile> {
                                     ),
                                   ),
           
+                                ),Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      InkWell(
+                                        child: Text('Forgot password?',
+                                            style: TextStyle(
+                                                fontSize: 12, color: Colors.white)),
+                                        onTap: () async {
+                                          if(emailController.text == ''){
+                                            AwesomeDialog(
+                                              width: MediaQuery.of(context).size.width * 0.9,
+                                              context: context,
+                                              dialogType: DialogType.error,
+                                              animType: AnimType.scale,
+                                              title: 'Error',
+                                              titleTextStyle: TextStyle(
+                                                  color: Colors.red,
+                                                  fontWeight: FontWeight.bold
+                                              ),
+                                              desc: 'Please enter your email then click Forgot Password',
+                                              //btnCancelOnPress: () {},
+                                              btnOkOnPress: () {},
+                                              btnOkColor: MyThemeData.primaryColor,
+                                            )..show();
+                                            return;
+                                          }
+                                          try {
+                                            await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
+                                            AwesomeDialog(
+                                              width: MediaQuery.of(context).size.width * 0.9,
+                                              context: context,
+                                              dialogType: DialogType.success,
+                                              animType: AnimType.rightSlide,
+                                              title: 'Success',
+                                              titleTextStyle: TextStyle(
+                                                  color: Colors.green,
+                                                  fontWeight: FontWeight.bold
+                                              ),
+                                              desc: 'A link to reset your password has been sent to your email. Please go to your email and click on the link',
+                                              //btnCancelOnPress: () {},
+                                              btnOkOnPress: () {},
+                                              btnOkColor: MyThemeData.primaryColor,
+                                            )..show();
+                                          }
+                                          catch (e){
+                                            AwesomeDialog(
+                                              width: MediaQuery.of(context).size.width * 0.9,
+                                              context: context,
+                                              dialogType: DialogType.error,
+                                              animType: AnimType.rightSlide,
+                                              title: 'Error',
+                                              titleTextStyle: TextStyle(
+                                                  color: Colors.red,
+                                                  fontWeight: FontWeight.bold
+                                              ),
+                                              desc: e.toString(),
+                                              //btnCancelOnPress: () {},
+                                              btnOkOnPress: () {},
+                                              btnOkColor: MyThemeData.primaryColor,
+                                            )..show();
+                                          }
+
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 SizedBox(
-                                  height: MediaQuery.of(context).size.height * 0.04,
+                                  height: MediaQuery.of(context).size.height * 0.02,
                                 ),
                                 SizedBox(
                                   width: double.infinity,

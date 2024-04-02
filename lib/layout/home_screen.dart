@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height:
                                     MediaQuery.of(context).size.height * 0.08,
                                 child: ElevatedButton(
-                                    onPressed: () {
+                                    onPressed: () async{
                                       vaildEmail();
                                     },
                                     style: ElevatedButton.styleFrom(

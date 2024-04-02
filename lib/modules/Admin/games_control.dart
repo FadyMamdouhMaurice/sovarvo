@@ -1,3 +1,4 @@
+import 'package:Sovarvo/shared/my_theme.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
@@ -52,26 +53,37 @@ class _GameCountScreenState extends State<GameCountScreen> {
                                 entry.value["image-url"],
                                 height: 100,
                               ),
-                              const SizedBox(width: 10),
-                              Text(
-                                "${entry.value["count"]}",
-                                style: const TextStyle(fontSize: 20),
-                              ),
                               const Expanded(child: SizedBox()),
-                              IconButton(
-                                onPressed: () {
-                                  _changeGameCount(entry.key);
-                                },
-                                icon: const Icon(Icons.shopping_cart, size: 30),
-                                color: const Color(0xff8F3D96),
+                              Column(
+                                children: [
+                                  Text(
+                                    "Count: ${entry.value["count"]}",
+                                    style: TextStyle(fontSize: 20, color: MyThemeData.primaryColor),
+                                  ),
+                                  SizedBox(height: MediaQuery.of(context).size.height * 0.02 ,),
+                                  Text(
+                                    "Price: ${entry.value["price"]}",
+                                    style: TextStyle(fontSize: 20, color: MyThemeData.primaryColor),
+                                  ),
+                                ],
                               ),
-                              const Expanded(child: SizedBox()),
-                              IconButton(
-                                onPressed: () {
-                                  _changeGamePrice(entry.key);
-                                },
-                                icon: const Icon(Icons.monetization_on, size: 30),
-                                color: const Color(0xff8F3D96),
+                              Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      _changeGameCount(entry.key);
+                                    },
+                                    icon: const Icon(Icons.shopping_cart, size: 30),
+                                    color: const Color(0xff8F3D96),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      _changeGamePrice(entry.key);
+                                    },
+                                    icon: const Icon(Icons.monetization_on, size: 30),
+                                    color: const Color(0xff8F3D96),
+                                  ),
+                                ],
                               ),
                               const Expanded(child: SizedBox()),
                               IconButton(

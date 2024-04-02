@@ -1,3 +1,4 @@
+import 'package:Sovarvo/apis.dart';
 import 'package:flutter/material.dart';
 import 'package:Sovarvo/modules/home%20after%20register/home_after_register_mobile.dart';
 import 'package:Sovarvo/modules/home%20screen/bottom_navigation_bar.dart';
@@ -87,7 +88,7 @@ class _MakeOrderMobileState extends State<MakeOrderMobile> {
                         height: MediaQuery.of(context).size.width * 0.06,
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.6,
+                        height: MediaQuery.of(context).size.height * 0.8,
                         width: double.infinity,
                         child: SingleChildScrollView(
                           child: Column(
@@ -335,8 +336,11 @@ class _MakeOrderMobileState extends State<MakeOrderMobile> {
                         selectedEndDate!,
                         selectedGames,
                         int.parse(selectedController!),
-                        selectedStation!,
+                        selectedStation!, 
                         totalPrice);
+
+                    List<String> t = await getAllAdminsTokens();
+                    await sendPushNotification(t);
 
                     Navigator.of(context).pop(); // Close dialog
                     _showConfirmation(context,

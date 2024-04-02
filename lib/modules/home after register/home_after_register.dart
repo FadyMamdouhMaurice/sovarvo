@@ -3,7 +3,6 @@ import 'package:Sovarvo/modules/home%20screen/bottom_navigation_bar.dart';
 import 'package:Sovarvo/modules/make_order/make_order.dart';
 import 'package:Sovarvo/shared/my_theme.dart';
 import '../home screen/appbar_home.dart';
-import '../make_order/make_order_functions.dart';
 
 class HomeAfterRegister extends StatelessWidget {
   const HomeAfterRegister({super.key});

@@ -57,16 +57,6 @@ class _DateSectionState extends State<DateSection> {
       children: [
         Padding(
           padding: EdgeInsetsDirectional.symmetric(
-            vertical: MediaQuery.of(context).size.height * 0.009,
-          ),
-          child: Text("يتم إستلام الجهاز من الساعة 7 مساءً حتى الساعة 12 منتصف الليل",
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  color: MyThemeData.primaryColor,
-                  fontWeight: FontWeight.w700),
-           textAlign: TextAlign.center),
-        ),
-        Padding(
-          padding: EdgeInsetsDirectional.symmetric(
             vertical: MediaQuery.of(context).size.width * 0.009,
           ),
           child: Text("Rental period",
@@ -166,7 +156,7 @@ class _DateSectionState extends State<DateSection> {
           padding: EdgeInsetsDirectional.symmetric(
             vertical: MediaQuery.of(context).size.width * 0.009,
           ),
-          child: Text("Pick up station",
+          child: Text("Pick up location",
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                   color: MyThemeData.greyTextColor,
                   fontWeight: FontWeight.w700)),
@@ -218,6 +208,17 @@ class _DateSectionState extends State<DateSection> {
             ),
           ),
         ),
+        Padding(
+          padding: EdgeInsetsDirectional.symmetric(
+            vertical: MediaQuery.of(context).size.height * 0.02,
+          ),
+          child: Text("The device will be picked up from 7:00 PM to 12 AM. \n We'll call you to set a specific time once your order is complete.",
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: MyThemeData.primaryColor,
+                  fontWeight: FontWeight.w700),
+              textAlign: TextAlign.center),
+        ),
+
       ],
     );
   }

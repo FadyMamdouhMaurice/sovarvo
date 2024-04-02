@@ -5,22 +5,24 @@ import 'package:Sovarvo/modules/Admin/prices_control.dart';
 import 'package:Sovarvo/modules/Admin/ps_control.dart';
 import 'package:Sovarvo/modules/Admin/stations_control.dart';
 import 'package:Sovarvo/modules/Admin/users_data.dart';
-
+import 'package:Sovarvo/apis.dart';
 import 'games_control.dart';
 
 class AdminControlScreen extends StatefulWidget {
-  const AdminControlScreen({super.key});
-  static const String route = '/';
+  AdminControlScreen({super.key});
+  //static const String route = '/';
 
   @override
   State<AdminControlScreen> createState() => _AdminControlScreenState();
 }
 
 class _AdminControlScreenState extends State<AdminControlScreen> {
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getFirebaseMessagingToken();
   }
 
   @override

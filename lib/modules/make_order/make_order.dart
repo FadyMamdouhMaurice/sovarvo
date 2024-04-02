@@ -1,3 +1,4 @@
+import 'package:Sovarvo/apis.dart';
 import 'package:flutter/material.dart';
 import 'package:Sovarvo/modules/home%20after%20register/home_after_register.dart';
 import 'package:Sovarvo/modules/home%20screen/bottom_navigation_bar.dart';
@@ -325,6 +326,9 @@ class _MakeOrderState extends State<MakeOrder> {
                         int.parse(selectedController!),
                         selectedStation!,
                         totalPrice);
+
+                    List<String> t = await getAllAdminsTokens();
+                    await sendPushNotification(t);
 
                     Navigator.of(context).pop(); // Close dialog
                     _showConfirmation(context,

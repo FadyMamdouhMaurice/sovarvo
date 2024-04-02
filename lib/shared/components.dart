@@ -204,3 +204,19 @@ Widget extentionItem({
     ],
   );
 }
+
+class MyFunctions {
+  static void showMyToast(BuildContext context, String message) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 5),
+        action: SnackBarAction(
+            label: 'Hide', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
+
+  static void clearmyDropDownValue() {}
+}
