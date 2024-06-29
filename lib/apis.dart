@@ -5,6 +5,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart';
 
+
+
 //for accessing firebase messaging (Push Notification)
 FirebaseMessaging fMessaging = FirebaseMessaging.instance;
 
@@ -107,3 +109,40 @@ Future<List<String>> getAllAdminsTokens() async {
 
   return tokens;
 }
+
+/*
+const clienId = "891557376496-6i06l4dcnih0vaf07am12gbgjpdugkld.apps.googleusercontent.com";
+const clientSecret = "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";
+const scope = [dr.DriveApi];
+class GoogleDrive {
+  final storage = SecureStorage();
+
+  //Get Authenticated Http Client
+  Future<http.Client> getHttpClient() async {
+
+    //Get Credentials
+    var credentials = await storage.getCredentials();
+    if(credentials == null){
+
+    var authClient = await clientViaUserConsent(ClientId(clienId, clientSecret), scope.cast<String>(), (url){
+      //open Url in Browser
+      launchUrl(url as Uri);
+    });
+    return authClient;
+    } else {
+      return authenticatedClient(http.Client(), AccessCredentials(
+      AccessToken(credentials['type'],credentials['data'],DateTime.parse(credentials['expiry'])), credentials['refreshToken'], scope.cast<String>()));
+    }
+  }
+
+  // Upload File
+  Future upload(File file) async {
+    var client = await getHttpClient();
+    var drive = dr.DriveApi(client);
+
+    var response = await drive.files.create(
+      dr.File()..name = p.basename(file.absolute.path),
+      uploadMedia: dr.Media(file.openRead(), file.lengthSync()));
+    print(response.toJson());
+  }
+}*/

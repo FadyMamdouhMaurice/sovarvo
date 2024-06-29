@@ -48,7 +48,6 @@ class _DateSectionState extends State<DateSection> {
     // Initialize startDate and endDate with default values
     startDate = DateTime.now();
     endDate = DateTime.now();
-
   }
 
   @override

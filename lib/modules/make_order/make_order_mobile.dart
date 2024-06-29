@@ -269,7 +269,7 @@ class _MakeOrderMobileState extends State<MakeOrderMobile> {
     int controllerPrice = (int.parse(selectedController!) <= 2) ? 0 : prices.controllerPrice;
 
     totalPrice = (prices.psPrice * numberOfDays +
-        controllerPrice * (int.parse(selectedController!)) / 2 +
+        (controllerPrice * (int.parse(selectedController!)) / 2 * numberOfDays ) +
         (sum * numberOfDays))
         .toDouble();
     //(prices.dayPrice * numberOfDays) +
@@ -358,7 +358,9 @@ class _MakeOrderMobileState extends State<MakeOrderMobile> {
             );
           });
     }
-    setState(() {});
+    setState(() {
+
+    });
   }
   Future<void> checkUserSignInMobile() async {
     if (user == null) {

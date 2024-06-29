@@ -1,3 +1,4 @@
+import 'package:Sovarvo/modules/rent_video_games/rent_video_games.dart';
 import 'package:flutter/material.dart';
 import 'package:Sovarvo/modules/home%20screen/bottom_navigation_bar.dart';
 import 'package:Sovarvo/modules/make_order/make_order.dart';
@@ -42,25 +43,52 @@ class HomeAfterRegister extends StatelessWidget {
                             style: Theme.of(context).textTheme.headlineMedium),
                         SizedBox(
                             height: MediaQuery.of(context).size.height * 0.05),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.height * 0.5,
-                          height: MediaQuery.of(context).size.height * 0.1,
-                          child: ElevatedButton(
-                              onPressed: () async {
-                                Navigator.of(context).pushNamed(
-                                    MakeOrder.route);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                backgroundColor: MyThemeData.primaryColor,
-                              ),
-                              child: Text("Make an order",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium!
-                                      .copyWith(fontWeight: FontWeight.w500))),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.height * 0.5,
+                              height: MediaQuery.of(context).size.height * 0.1,
+                              child: ElevatedButton(
+                                  onPressed: () async {
+                                    Navigator.of(context).pushNamed(
+                                        MakeOrder.route);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10)),
+                                    backgroundColor: MyThemeData.primaryColor,
+                                  ),
+                                  child: Text("Rent consoles",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium!
+                                          .copyWith(fontWeight: FontWeight.w500))),
+                            ),
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.05),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.height * 0.5,
+                              height: MediaQuery.of(context).size.height * 0.1,
+                              child: ElevatedButton(
+                                  onPressed: () async {
+                                    Navigator.of(context).pushNamed(
+                                        RentVideoGames.route);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10)),
+                                    backgroundColor: MyThemeData.primaryColor,
+                                  ),
+                                  child: Text("Rent video games",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium!
+                                          .copyWith(fontWeight: FontWeight.w500))),
+                            ),
+                          ],
                         ),
+
                       ],
                     ),
                   )

@@ -219,7 +219,6 @@ class _MakeOrderState extends State<MakeOrder> {
     });
   }
 
-
   int calculateNumberOfDays() {
     if (selectedStartDate != null && selectedEndDate != null) {
       final difference = selectedEndDate!.difference(selectedStartDate!).inDays;
@@ -256,7 +255,7 @@ class _MakeOrderState extends State<MakeOrder> {
     int controllerPrice = (int.parse(selectedController!) <= 2) ? 0 : prices.controllerPrice;
 
     totalPrice = (prices.psPrice * numberOfDays +
-        controllerPrice * (int.parse(selectedController!)) / 2 +
+        (controllerPrice * (int.parse(selectedController!)) / 2 * numberOfDays ) +
             (sum * numberOfDays))
         .toDouble();
 //(prices.dayPrice * numberOfDays) +
@@ -349,6 +348,7 @@ class _MakeOrderState extends State<MakeOrder> {
     }
     setState(() {});
   }
+
   Future<void> checkUserSignIn() async {
     if (user == null) {
       showDialog(

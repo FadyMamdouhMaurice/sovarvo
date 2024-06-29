@@ -1,8 +1,13 @@
 import 'package:Sovarvo/layout/home_Screen_mobile.dart';
+import 'package:Sovarvo/modules/Admin/admin_control_screen.dart';
+import 'package:Sovarvo/modules/Admin/admin_home.dart';
 import 'package:Sovarvo/modules/complete%20register/complete_register_mobile.dart';
 import 'package:Sovarvo/modules/home%20after%20register/home_after_register_mobile.dart';
 import 'package:Sovarvo/modules/make_order/make_order_mobile.dart';
+import 'package:Sovarvo/modules/rent_video_games/cart_screen.dart';
+import 'package:Sovarvo/modules/rent_video_games/rent_video_games_functions.dart';
 import 'package:Sovarvo/modules/signin/signin_mobile.dart';
+import 'package:Sovarvo/modules/rent_video_games/rent_video_games.dart';
 import 'package:Sovarvo/services/notification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -77,7 +82,7 @@ class MyApp extends StatelessWidget {
                 darkTheme: MyThemeData.darkTheme,
                 initialRoute: '/',
                 routes: {
-                  HomeScreen.route: (context) => HomeScreen(),
+                  HomeScreen.route: (context) => HomeAfterRegister(),
                   SignIn.route: (context) => SignIn(),
                   CompleteRegister.route: (context) {
                     final String? email =
@@ -88,15 +93,17 @@ class MyApp extends StatelessWidget {
                   },
                   HomeAfterRegister.route: (context) => HomeAfterRegister(),
                   MakeOrder.route: (context) => MakeOrder(),
+                  RentVideoGames.route: (context) => RentVideoGames(),
+                  CartScreen.route: (context) => CartScreen(cartItems: cartItems,),
                 },
                 //home: const HomeScreen()
               ),
             ),
-            mobile: (p0) => /*MaterialApp(debugShowCheckedModeBanner: false,
+            mobile: (p0) => MaterialApp(debugShowCheckedModeBanner: false,
                 theme: MyThemeData.lightTheme,
                 darkTheme: MyThemeData.darkTheme,
-                home: AdminControlScreen()),*/
-                AnnotatedRegion(
+                home: AdminHomeScreen()),
+               /* AnnotatedRegion(
               value: SystemUiOverlayStyle(
                 statusBarColor: const Color(0xff8F3D96),
               ),
@@ -121,7 +128,7 @@ class MyApp extends StatelessWidget {
                 },
                 //home: const HomeScreen()
               ),
-            ),
+            ),*/
             breakpoints: const ScreenBreakpoints(
               desktop: 500,
               watch: 0.0,
