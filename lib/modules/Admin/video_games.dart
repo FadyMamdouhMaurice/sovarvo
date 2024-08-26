@@ -21,6 +21,7 @@ class _videoGamesScreenState extends State<videoGamesScreen> {
   int rentVideoGamePrice = 0;
   int usedVideoGamePrice = 0;
   int videoGameCount = 0;
+  int insurancevideoGamePrice = 0;
   String availableDate = '';
 
   @override
@@ -54,104 +55,126 @@ class _videoGamesScreenState extends State<videoGamesScreen> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: <Widget>[
-                                  Image.network(
-                                    entry.value["image-url"],
-                                    height: MediaQuery.of(context).size.height * 0.2,
-                                  ),
-                                  const Expanded(child: SizedBox()),
-                                  Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "Available Date: ${entry.value["available-date"]}",
-                                            style: TextStyle(fontSize: 20, color: MyThemeData.primaryColor),
-                                          ),
-                                          IconButton(
-                                            onPressed: () {
-                                              _showUpdateDateDialog(entry.key, entry.value["available-date"]);
-                                            },
-                                            icon: const Icon(Icons.date_range, size: 30),
-                                            color: const Color(0xff8F3D96),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: MediaQuery.of(context).size.height * 0.02 ,),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "Count: ${entry.value["Count"]}",
-                                            style: TextStyle(fontSize: 20, color: MyThemeData.primaryColor),
-                                          ),
-                                          IconButton(
-                                            onPressed: () {
-                                              _showUpdateCountDialog(entry.key);
-                                            },
-                                            icon: const Icon(Icons.shopping_cart, size: 30),
-                                            color: const Color(0xff8F3D96),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: MediaQuery.of(context).size.height * 0.02 ,),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "Price: ${entry.value["price"]}",
-                                            style: TextStyle(fontSize: 20, color: MyThemeData.primaryColor),
-                                          ),
-                                          IconButton(
-                                            onPressed: () {
-                                              _showUpdatePriceDialog(entry.key);
-                                            },
-                                            icon: const Icon(Icons.monetization_on, size: 30),
-                                            color: const Color(0xff8F3D96),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: MediaQuery.of(context).size.height * 0.02 ,),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "Rent Price: ${entry.value["rent-price"]}",
-                                            style: TextStyle(fontSize: 20, color: MyThemeData.primaryColor),
-                                          ),
-                                          IconButton(
-                                            onPressed: () {
-                                              _showUpdateRentPriceDialog(entry.key);
-                                            },
-                                            icon: const Icon(Icons.monetization_on, size: 30),
-                                            color: const Color(0xff8F3D96),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: MediaQuery.of(context).size.height * 0.02 ,),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "Used Price: ${entry.value["used-price"]}",
-                                            style: TextStyle(fontSize: 20, color: MyThemeData.primaryColor),
-                                          ),
-                                          IconButton(
-                                            onPressed: () {
-                                              _showUpdateUsedPriceDialog(entry.key);
-                                            },
-                                            icon: const Icon(Icons.monetization_on, size: 30),
-                                            color: const Color(0xff8F3D96),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  const Expanded(child: SizedBox()),
-                                  IconButton(
-                                      onPressed: () {
-                                        _deleteVideoGame(entry.key);
-                                      },
-                                      icon: const Icon(Icons.delete_forever),
-                                      color: Colors.red),
-                                ],
+                              child: SingleChildScrollView(
+
+                                child: Row(
+
+                                  children: <Widget>[
+                                    Image.network(
+                                      entry.value["image-url"],
+                                      height: MediaQuery.of(context).size.height * 0.2,
+                                    ),
+                                    SizedBox(width: 16,),
+                                    Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Available Date: ${entry.value["available-date"]}",
+                                              style: TextStyle(fontSize: 20, color: MyThemeData.primaryColor),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                _showUpdateDateDialog(entry.key, entry.value["available-date"]);
+                                              },
+                                              icon: const Icon(Icons.date_range, size: 30),
+                                              color: const Color(0xff8F3D96),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: MediaQuery.of(context).size.height * 0.02 ,),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Count: ${entry.value["Count"]}",
+                                              style: TextStyle(fontSize: 20, color: MyThemeData.primaryColor),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                _showUpdateCountDialog(entry.key);
+                                              },
+                                              icon: const Icon(Icons.shopping_cart, size: 30),
+                                              color: const Color(0xff8F3D96),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: MediaQuery.of(context).size.height * 0.02 ,),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Price: ${entry.value["price"]}",
+                                              style: TextStyle(fontSize: 20, color: MyThemeData.primaryColor),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                _showUpdatePriceDialog(entry.key);
+                                              },
+                                              icon: const Icon(Icons.monetization_on, size: 30),
+                                              color: const Color(0xff8F3D96),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: MediaQuery.of(context).size.height * 0.02 ,),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Rent Price: ${entry.value["rent-price"]}",
+                                              style: TextStyle(fontSize: 20, color: MyThemeData.primaryColor),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                _showUpdateRentPriceDialog(entry.key);
+                                              },
+                                              icon: const Icon(Icons.monetization_on, size: 30),
+                                              color: const Color(0xff8F3D96),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: MediaQuery.of(context).size.height * 0.02 ,),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Used Price: ${entry.value["used-price"]}",
+                                              style: TextStyle(fontSize: 20, color: MyThemeData.primaryColor),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                _showUpdateUsedPriceDialog(entry.key);
+                                              },
+                                              icon: const Icon(Icons.monetization_on, size: 30),
+                                              color: const Color(0xff8F3D96),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: MediaQuery.of(context).size.height * 0.02 ,),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Insurance Price: ${entry.value["insurance-price"]}",
+                                              style: TextStyle(fontSize: 20, color: MyThemeData.primaryColor),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                _showUpdateInsurancePriceDialog(entry.key);
+                                              },
+                                              icon: const Icon(Icons.monetization_on, size: 30),
+                                              color: const Color(0xff8F3D96),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(width: 16,),
+
+                                    IconButton(
+                                        onPressed: () {
+                                          _deleteVideoGame(entry.key);
+                                        },
+                                        icon: const Icon(Icons.delete_forever),
+                                        color: Colors.red),
+                                  ],
+                                ),
+                                scrollDirection: Axis.horizontal,
                               ),
                             ),
                             Divider(
@@ -247,6 +270,16 @@ class _videoGamesScreenState extends State<videoGamesScreen> {
                                     });
                                   },
                                 ),
+                                TextField(
+                                  decoration:
+                                  const InputDecoration(labelText: 'insurance price'),
+                                  onChanged: (value) {
+                                    // Update image URL when text changes
+                                    setState(() {
+                                      insurancevideoGamePrice = int.parse(value);
+                                    });
+                                  },
+                                ),
                                 SizedBox(
                                   height: MediaQuery.of(context).size.height * 0.05 ,
                                 ),
@@ -278,7 +311,7 @@ class _videoGamesScreenState extends State<videoGamesScreen> {
                                           0.02)),
                               onPressed: () {
                                 // Add new game to the database
-                                _addNewVidoeGame(newVideoGameName, newVideoGameImageUrl,videoGameCount, newVideoGamePrice, rentVideoGamePrice, usedVideoGamePrice,availableDate);
+                                _addNewVidoeGame(newVideoGameName, newVideoGameImageUrl,videoGameCount, newVideoGamePrice, rentVideoGamePrice, usedVideoGamePrice,availableDate, insurancevideoGamePrice);
                                 Navigator.of(context).pop();
                               },
                             ),
@@ -307,14 +340,15 @@ class _videoGamesScreenState extends State<videoGamesScreen> {
     });
   }
 
-  void _addNewVidoeGame(String videoGameName, String imageUrl, int count, int price, int rentPrice, int usedPrice, String availableDate) {
+  void _addNewVidoeGame(String videoGameName, String imageUrl, int count, int price, int rentPrice, int usedPrice, String availableDate, int insurancevideoGamePrice) {
     databaseReference.child("VideoGames").child(videoGameName).set({
       "image-url": imageUrl,
       "Count": count,
       "price": price,
       "rent-price": rentPrice,
       "used-price": usedPrice,
-      "available-date": availableDate
+      "available-date": availableDate,
+      "insurance-price": insurancevideoGamePrice
     }).then((_) {
       setState(() {
         videoGames[videoGameName] = {
@@ -324,6 +358,7 @@ class _videoGamesScreenState extends State<videoGamesScreen> {
           "rent-price": rentPrice,
           "used-price": usedPrice,
           "available-date": availableDate,
+          "insurance-price": insurancevideoGamePrice
         };
       });
       //print("$gameName added successfully.");
@@ -601,14 +636,14 @@ class _videoGamesScreenState extends State<videoGamesScreen> {
               children: [
                 Text('Current Date: $currentDate', style: TextStyle(fontSize: 16, color: Colors.black)),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.5 ,
-                  height: MediaQuery.of(context).size.height * 0.5 ,
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.5,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.grey,
                   ),
                   child: SfDateRangePicker(
-                    initialSelectedDate: DateTime.parse(currentDate),
+                    initialSelectedDate: DateTime.tryParse(currentDate) ?? DateTime.now(),
                     selectionMode: DateRangePickerSelectionMode.single,
                     onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
                       if (args.value is DateTime) {
@@ -656,4 +691,57 @@ class _videoGamesScreenState extends State<videoGamesScreen> {
       //print("Failed to update $gameKey date: $error");
     });
   }
+
+  void _showUpdateInsurancePriceDialog(String videoGameName) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        int newInsurancePrice = videoGames[videoGameName]["insurance-price"];
+        return AlertDialog(
+          title: const Text("Update Insurance Price",
+              style: TextStyle(color: Colors.black)),
+          content: TextField(
+            decoration: const InputDecoration(labelText: 'New Insurance Price'),
+            keyboardType: TextInputType.number,
+            onChanged: (value) {
+              newInsurancePrice = int.parse(value);
+            },
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text("Cancel",
+                  style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height * 0.02)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("Update",
+                  style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height * 0.02)),
+              onPressed: () {
+                _updateVideoGameInsurancePrice(videoGameName, newInsurancePrice);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _updateVideoGameInsurancePrice(String videoGameName, int newInsurancePrice) {
+    databaseReference.child("VideoGames").child(videoGameName).update({
+      "insurance-price": newInsurancePrice,
+    }).then((_) {
+      setState(() {
+        videoGames[videoGameName]["insurance-price"] = newInsurancePrice;
+      });
+      //print("Count updated successfully.");
+    }).catchError((error) {
+      //print("Failed to update count: $error");
+    });
+  }
+
 }

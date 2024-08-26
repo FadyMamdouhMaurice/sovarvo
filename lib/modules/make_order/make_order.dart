@@ -327,7 +327,7 @@ class _MakeOrderState extends State<MakeOrder> {
                         totalPrice);
 
                     List<String> t = await getAllAdminsTokens();
-                    await sendPushNotification(t);
+                    await sendPushNotification(t,'Sovarvo has got new rental');
 
                     Navigator.of(context).pop(); // Close dialog
                     _showConfirmation(context,

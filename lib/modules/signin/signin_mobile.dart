@@ -9,6 +9,7 @@ import 'package:Sovarvo/modules/home%20after%20register/home_after_register_mobi
 import 'package:Sovarvo/modules/home%20screen/bottom_navigation_bar.dart';
 import 'package:Sovarvo/modules/realtime_firebase/users.dart';
 import '../../shared/my_theme.dart';
+import 'dart:html' as html;
 
 class SignInMobile extends StatefulWidget {
   const SignInMobile({super.key});
@@ -26,6 +27,13 @@ class _SignInMobileState extends State<SignInMobile> {
   var formKey = GlobalKey<FormState>();
   String login = '';
   bool isPasswordShow = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _requestStoredCredentials();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -329,5 +337,24 @@ class _SignInMobileState extends State<SignInMobile> {
         ),
       ),
     );
+  }
+
+  void _requestStoredCredentials() async {
+    try {
+      final credentials = await html.window.navigator.credentials?.get({
+        'password': true,
+        'federated': {'providers': ['https://accounts.google.com']}
+      });
+
+      if (credentials is html.PasswordCredential) {
+        setState(() {
+          emailController.text = credentials.id!;
+          passwordController.text = credentials.password!;
+        });
+      }
+    } catch (e) {
+      // Handle errors (e.g., no stored credentials found)
+      print('No stored credentials found: $e');
+    }
   }
 }

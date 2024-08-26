@@ -63,7 +63,7 @@ class HomeAfterRegister extends StatelessWidget {
                                       style: Theme.of(context)
                                           .textTheme
                                           .headlineMedium!
-                                          .copyWith(fontWeight: FontWeight.w500))),
+                                          .copyWith(fontWeight: FontWeight.w500, fontSize: MediaQuery.of(context).size.width * 0.015))),
                             ),
                             SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.05),
@@ -80,11 +80,12 @@ class HomeAfterRegister extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(10)),
                                     backgroundColor: MyThemeData.primaryColor,
                                   ),
-                                  child: Text("Rent video games",
+                                  child: Text("Rent & Buy video games",
+                                      textAlign: TextAlign.center,
                                       style: Theme.of(context)
                                           .textTheme
                                           .headlineMedium!
-                                          .copyWith(fontWeight: FontWeight.w500))),
+                                          .copyWith(fontWeight: FontWeight.w500, fontSize: MediaQuery.of(context).size.width * 0.015))),
                             ),
                           ],
                         ),

@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:Sovarvo/modules/realtime_firebase/users.dart';
 import 'package:Sovarvo/services/notification.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart';
-
-
 
 //for accessing firebase messaging (Push Notification)
 FirebaseMessaging fMessaging = FirebaseMessaging.instance;
@@ -22,14 +21,15 @@ Future<void> getFirebaseMessagingToken() async {
   });
 }
 //for sending push notification
-Future<void> sendPushNotification(List<String> tokens) async {
+Future<void> sendPushNotification(List<String> tokens, String message) async {
   try {
     for (String token in tokens) {
       final body = {
         "to": token,
         "notification": {
           "title": "Sovarvo", //our name should be sent
-          "body": "Sovarvo has got new rental",
+          //"body": "Sovarvo has got new rental",
+          "body": message,
         },
       };
 
@@ -110,39 +110,37 @@ Future<List<String>> getAllAdminsTokens() async {
   return tokens;
 }
 
-/*
-const clienId = "891557376496-6i06l4dcnih0vaf07am12gbgjpdugkld.apps.googleusercontent.com";
-const clientSecret = "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";
-const scope = [dr.DriveApi];
-class GoogleDrive {
-  final storage = SecureStorage();
+//for sending push notification
+Future<void> sendPushNotificationForRequestUserNotifyWhenAvailable(List<String> tokens, String gameName) async {
+  try {
+    for (String token in tokens) {
+      final body = {
+        "to": token,
+        "notification": {
+          "title": "Sovarvo", //our name should be sent
+          "body": "Please Notify Me When $gameName is Available",
+        },
+      };
 
-  //Get Authenticated Http Client
-  Future<http.Client> getHttpClient() async {
+      var response = await post(
+        Uri.parse("https://fcm.googleapis.com/fcm/send"),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader:
+          'key=AAAANL8FLBg:APA91bFZA-QhnqtXTxNptzInFrjyUQ5GNzBTQBAOHiUQ75XOppPpMiKpwT8o4TqrRVjc-iKhtmkh-DNA28FKUYoKiHqolovm8oe6ZWKbaqE5mYVRUC9cN9enKhqcWcR1wZcU_P5JttEW'
+        },
+        body: jsonEncode(body),
+      );
 
-    //Get Credentials
-    var credentials = await storage.getCredentials();
-    if(credentials == null){
-
-    var authClient = await clientViaUserConsent(ClientId(clienId, clientSecret), scope.cast<String>(), (url){
-      //open Url in Browser
-      launchUrl(url as Uri);
-    });
-    return authClient;
-    } else {
-      return authenticatedClient(http.Client(), AccessCredentials(
-      AccessToken(credentials['type'],credentials['data'],DateTime.parse(credentials['expiry'])), credentials['refreshToken'], scope.cast<String>()));
+      print('Response status for token $token: ${response.statusCode}');
+      print('Response body for token $token: ${response.body}');
+      // Display a local notification
+      await NotificationService.showNotification(title: "Sovarvo", body: "Please Notify Me When $gameName is Available",
+      );
     }
+    DateTime now = DateTime.now();
+    addNotifyUser(user!.fullName,user!.email, user!.phone, gameName, now.toString());
+  } catch (e) {
+    print('\nsendPushNotificationE: $e');
   }
-
-  // Upload File
-  Future upload(File file) async {
-    var client = await getHttpClient();
-    var drive = dr.DriveApi(client);
-
-    var response = await drive.files.create(
-      dr.File()..name = p.basename(file.absolute.path),
-      uploadMedia: dr.Media(file.openRead(), file.lengthSync()));
-    print(response.toJson());
-  }
-}*/
+}

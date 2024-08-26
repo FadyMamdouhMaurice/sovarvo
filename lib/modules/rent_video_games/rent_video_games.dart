@@ -1,4 +1,7 @@
+import 'package:Sovarvo/apis.dart';
 import 'package:Sovarvo/modules/home%20screen/bottom_navigation_bar.dart';
+import 'package:Sovarvo/modules/realtime_firebase/users.dart';
+import 'package:Sovarvo/modules/rent_video_games/cart_functions.dart';
 import 'package:Sovarvo/modules/rent_video_games/cart_screen.dart';
 import 'package:Sovarvo/modules/rent_video_games/rent_video_games_functions.dart';
 import 'package:Sovarvo/modules/rent_video_games/video_games_header.dart';
@@ -6,6 +9,7 @@ import 'package:Sovarvo/shared/my_theme.dart';
 import 'package:flutter/material.dart';
 
 class RentVideoGames extends StatefulWidget {
+
   const RentVideoGames({super.key});
 
   static const String route = '/rentvideogames';
@@ -15,13 +19,12 @@ class RentVideoGames extends StatefulWidget {
 }
 
 class _RentVideoGamesState extends State<RentVideoGames> {
-  List<String> videoGamesSelected = [];
+  //List<String> videoGamesSelected = [];
   List<double> videoGamesSelectedPrices = [];
-  List<String> cartGames = []; // Track games added to cart
-  int cartCountItems = 0;
+  //List<String> cartGames = []; // Track games added to cart
+  //int cartCountItems = 0;
   Map<String, bool> buttonDisabledStates = {}; // Track disabled state of buttons
   Map<String, bool> notifyMeStates = {}; // Track "Notify Me When Available" state
-
 
   Map<String, Map<String, dynamic>> videoGames = {};
   Map<String, Map<String, dynamic>> filteredVideoGamesData = {};
@@ -32,25 +35,36 @@ class _RentVideoGamesState extends State<RentVideoGames> {
   int usedVideoGamePrice = 0;
   int videoGameCount = 0;
   String availableDate = '';
-  String _sortOption = 'Price';
+  String _sortOption = 'Price (New)';
   String buttonText = 'Add To Cart';
   TextEditingController searchText = TextEditingController();
+  bool isLoading = true;
+  final CartHelpers cartHelpers = CartHelpers();
 
   @override
   void initState() {
     super.initState();
     initializeAsyncTasks();
+    loadCartItems();
+    setState(() {
+      // Your logic here
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[900],
-      body: SingleChildScrollView(
+      body:  isLoading
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          : SingleChildScrollView(
         child: Column(
           children: [
             VideoGamesHeader(
-              cartCountItems: cartCountItems,
+              cartCountItems: cartItems.length,
               searchText: searchText,
               onSearchChanged: (value) {
                 setState(() {
@@ -60,7 +74,8 @@ class _RentVideoGamesState extends State<RentVideoGames> {
               onCartPressed: () async {
                 Navigator.of(context).pushNamed(CartScreen.route);
               },
-            ),            SizedBox(
+            ),
+            SizedBox(
               height: MediaQuery.of(context).size.width * 0.02,
             ),
             Row(
@@ -88,7 +103,7 @@ class _RentVideoGamesState extends State<RentVideoGames> {
                           sortVideoGames(videoGamesData, _sortOption);
                     });
                   },
-                  items: <String>['Name', 'Price', 'Availability']
+                  items: <String>['Name', 'Price (New)', 'Price (Used)', 'Price (Rent)', 'Availability']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -123,10 +138,16 @@ class _RentVideoGamesState extends State<RentVideoGames> {
                 String available_date =
                     videoGamesData[gameName]?['available-date'] ?? '';
                 double saveMoney = used_price - rent_price;
+                int insurancePrice =
+                    videoGamesData[gameName]?['insurance-price'] ?? 0;
+                //bool isSelected = videoGamesSelected.contains(gameName); //List<String> gamesSelected = [];
+                /*buttonText = cartGames.contains(gameName)
+                    ? 'Added To Cart Successfully'
+                    : 'Add To Cart';*/
 
-                bool isSelected = videoGamesSelected
-                    .contains(gameName); //List<String> gamesSelected = [];
-                buttonText = cartGames.contains(gameName)
+                bool isInCart = cartItems
+                    .any((item) => item['name'] == gameName);
+                buttonText = isInCart
                     ? 'Added To Cart Successfully'
                     : 'Add To Cart';
 
@@ -166,66 +187,59 @@ class _RentVideoGamesState extends State<RentVideoGames> {
                         height: MediaQuery.of(context).size.height * 0.01,
                       ),
                       Expanded(
-                        child: Stack(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.15,
-                              height: MediaQuery.of(context).size.height * 0.8,
-                              color: isSelected
-                                  ? Color(0xff8F3D96).withOpacity(0.8)
-                                  : null,
-                              child: InkWell(
-                                onTap: () {
-                                  if (count > 0) {
-                                    setState(() {
-                                      if (!videoGamesSelected
-                                          .contains(gameName)) {
-                                        videoGamesSelected.add(gameName);
-                                        videoGamesSelectedPrices.add(price);
-                                      } else {
-                                        videoGamesSelected.remove(gameName);
-                                        videoGamesSelectedPrices.remove(price);
-                                      }
-                                      isSelected =
-                                          videoGamesSelected.contains(gameName);
-                                    });
-                                    //widget.onGamesSelected(videoGamesSelected, videoGamesSelectedPrices);
-                                    //print('Selected games: $gamesSelected');
-                                  }
-                                },
-                                child: imageUrl.isNotEmpty
-                                    ? Image.network(
-                                        imageUrl,
-                                        fit: BoxFit.contain,
-                                        // You might want to adjust the width and height
-                                        // according to your UI requirements
-                                      )
-                                    : const CircularProgressIndicator(), // Placeholder until image is loaded
+                        child: Container(
+                          width: double.infinity,
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.02,
                               ),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: MyThemeData.primaryColor,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    5.0,
+                              Stack(
+                                children: [
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: MediaQuery.of(context).size.width * 0.02,
+                                      ),
+                                      Container(
+                                        width: MediaQuery.of(context).size.width * 0.15,
+                                        height: MediaQuery.of(context).size.height * 0.8,
+                                        child: imageUrl.isNotEmpty
+                                            ? Image.network(
+                                          imageUrl,
+                                          fit: BoxFit.contain,
+                                          // You might want to adjust the width and height
+                                          // according to your UI requirements
+                                        )
+                                            : const CircularProgressIndicator(),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ),
-                              height: MediaQuery.of(context).size.height * 0.04,
-                              width: MediaQuery.of(context).size.width * 0.07,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  'Save $saveMoney EGP',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: MediaQuery.of(context).size.width * 0.008,
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: MyThemeData.primaryColor,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                          5.0,
+                                        ),
+                                      ),
+                                    ),
+                                    height: MediaQuery.of(context).size.height * 0.04,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        'Rent and Save $saveMoney EGP',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: MediaQuery.of(context).size.width * 0.008,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -336,23 +350,32 @@ class _RentVideoGamesState extends State<RentVideoGames> {
                         width: MediaQuery.of(context).size.width * 0.2,
                         height: MediaQuery.of(context).size.height * 0.04,
                         child: ElevatedButton(
-                          onPressed: buttonDisabledStates[gameName] == true ? null : () {
+                          onPressed: isInCart
+                              ? null
+                              : () {
+                            if (isInCart) return;
+
+
                             setState(() {
-                              cartCountItems++;
-                              if (!cartGames.contains(gameName)) {
-                                cartGames.add(gameName);
-                                cartItems.add({
-                                  'name': gameName,
-                                  'count': count,
-                                  'image-url': imageUrl,
-                                  'price': price,
-                                  'rent-price': rent_price,
-                                  'used-price': used_price,
-                                  'available-date': available_date,
-                                });
-                              }
+                              //cartCountItems++;
+                              /*if (!cartGames.contains(gameName)) {
+                                //cartGames.add(gameName);
+
+                              }*/
+                              cartItems.add({
+                                'name': gameName,
+                                'count': count,
+                                'image-url': imageUrl,
+                                'price': price,
+                                'rent-price': rent_price,
+                                'used-price': used_price,
+                                'available-date': available_date,
+                                'insurance-price' : insurancePrice
+
+                              });
                               buttonDisabledStates[gameName] = true; // Disable button after click
                             });
+                            saveCartItems(); // Save to cache after adding item
                           },
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
@@ -371,11 +394,24 @@ class _RentVideoGamesState extends State<RentVideoGames> {
                           width: MediaQuery.of(context).size.width * 0.2,
                           height: MediaQuery.of(context).size.height * 0.04,
                           child: ElevatedButton(
-                            onPressed: notifyMeStates[gameName] == true ? null : () {
-                              setState(() {
-                                notifyMeStates[gameName] = true;
-                                buttonText = 'You Will Be Notified';
-                              });
+                            onPressed: notifyMeStates[gameName] == true ? null : () async {
+                              if(count == 0){
+                                await cartHelpers.checkUserSignIn(context, user);
+
+                                if(await cartHelpers.checkUserSignIn(context, user)){
+                                  List<String> t = await getAllAdminsTokens();
+                                  sendPushNotificationForRequestUserNotifyWhenAvailable(t,gameName);
+                                  setState(() {
+                                    notifyMeStates[gameName] = true;
+                                    buttonText = 'You Will Be Notified';
+                                  });
+                                 }
+                                 else{
+                                   await cartHelpers.checkUserSignIn(context, user);
+                                 }
+                                 return;
+                              }
+
                               /*ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
@@ -408,6 +444,11 @@ class _RentVideoGamesState extends State<RentVideoGames> {
                 );
               },
             ),
+            /*ElevatedButton(onPressed: (){
+              setState(() {
+
+              });
+            }, child: SizedBox()),*/
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
             ),
@@ -425,7 +466,11 @@ class _RentVideoGamesState extends State<RentVideoGames> {
       // Update the widget state if needed
       // Sort video games by price after loading
       filteredVideoGamesData = sortVideoGames(videoGamesData, _sortOption);
-      videoGamesData = filteredVideoGamesData; // Initialize display data
+      videoGamesData = filteredVideoGamesData; // Initialize display data+
+      isLoading = false; // Set loading to false once data is loaded
+
     });
   }
+
+
 }

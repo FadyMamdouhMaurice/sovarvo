@@ -1,4 +1,3 @@
-import 'package:Sovarvo/modules/Admin/video_games.dart';
 import 'package:flutter/material.dart';
 import 'package:Sovarvo/modules/Admin/controller_control.dart';
 import 'package:Sovarvo/modules/Admin/order_control.dart';
@@ -6,7 +5,6 @@ import 'package:Sovarvo/modules/Admin/prices_control.dart';
 import 'package:Sovarvo/modules/Admin/ps_control.dart';
 import 'package:Sovarvo/modules/Admin/stations_control.dart';
 import 'package:Sovarvo/modules/Admin/users_data.dart';
-import 'package:Sovarvo/apis.dart';
 import 'games_control.dart';
 
 class AdminControlScreen extends StatefulWidget {
@@ -23,7 +21,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getFirebaseMessagingToken();
+    //getFirebaseMessagingToken();
   }
 
   @override

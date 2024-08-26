@@ -1,11 +1,11 @@
 import 'package:Sovarvo/layout/home_Screen_mobile.dart';
-import 'package:Sovarvo/modules/Admin/admin_control_screen.dart';
-import 'package:Sovarvo/modules/Admin/admin_home.dart';
 import 'package:Sovarvo/modules/complete%20register/complete_register_mobile.dart';
 import 'package:Sovarvo/modules/home%20after%20register/home_after_register_mobile.dart';
 import 'package:Sovarvo/modules/make_order/make_order_mobile.dart';
 import 'package:Sovarvo/modules/rent_video_games/cart_screen.dart';
+import 'package:Sovarvo/modules/rent_video_games/cart_screen_mobile.dart';
 import 'package:Sovarvo/modules/rent_video_games/rent_video_games_functions.dart';
+import 'package:Sovarvo/modules/rent_video_games/rent_video_games_mobile.dart';
 import 'package:Sovarvo/modules/signin/signin_mobile.dart';
 import 'package:Sovarvo/modules/rent_video_games/rent_video_games.dart';
 import 'package:Sovarvo/services/notification.dart';
@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
                 darkTheme: MyThemeData.darkTheme,
                 initialRoute: '/',
                 routes: {
-                  HomeScreen.route: (context) => HomeAfterRegister(),
+                  HomeScreen.route: (context) => HomeScreen(),
                   SignIn.route: (context) => SignIn(),
                   CompleteRegister.route: (context) {
                     final String? email =
@@ -99,11 +99,7 @@ class MyApp extends StatelessWidget {
                 //home: const HomeScreen()
               ),
             ),
-            mobile: (p0) => MaterialApp(debugShowCheckedModeBanner: false,
-                theme: MyThemeData.lightTheme,
-                darkTheme: MyThemeData.darkTheme,
-                home: AdminHomeScreen()),
-               /* AnnotatedRegion(
+            mobile: (p0) => AnnotatedRegion(
               value: SystemUiOverlayStyle(
                 statusBarColor: const Color(0xff8F3D96),
               ),
@@ -125,10 +121,16 @@ class MyApp extends StatelessWidget {
                   HomeAfterRegister.route: (context) =>
                       HomeAfterRegisterMobile(),
                   MakeOrder.route: (context) => MakeOrderMobile(),
+                  RentVideoGames.route: (context) => RentVideoGamesMobile(),
+                  CartScreen.route: (context) => CartScreenMobile(cartItems: cartItems,),
                 },
                 //home: const HomeScreen()
               ),
-            ),*/
+            ),
+            /*MaterialApp(debugShowCheckedModeBanner: false,
+                theme: MyThemeData.lightTheme,
+                darkTheme: MyThemeData.darkTheme,
+                home: AdminHomeScreen()),*/
             breakpoints: const ScreenBreakpoints(
               desktop: 500,
               watch: 0.0,

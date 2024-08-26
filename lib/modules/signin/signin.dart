@@ -9,6 +9,7 @@ import 'package:Sovarvo/modules/realtime_firebase/users.dart';
 import 'package:Sovarvo/shared/components.dart';
 import '../../shared/my_theme.dart';
 import '../complete register/complete_register.dart';
+import 'dart:html' as html;
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -28,6 +29,12 @@ class _SignInState extends State<SignIn> {
   String login = '';
   bool isPasswordShow = true;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _requestStoredCredentials();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -320,5 +327,24 @@ class _SignInState extends State<SignIn> {
         ]),
       ),
     );
+  }
+
+  void _requestStoredCredentials() async {
+    try {
+      final credentials = await html.window.navigator.credentials?.get({
+        'password': true,
+        'federated': {'providers': ['https://accounts.google.com']}
+      });
+
+      if (credentials is html.PasswordCredential) {
+        setState(() {
+          emailController.text = credentials.id!;
+          passwordController.text = credentials.password!;
+        });
+      }
+    } catch (e) {
+      // Handle errors (e.g., no stored credentials found)
+      print('No stored credentials found: $e');
+    }
   }
 }

@@ -1,17 +1,17 @@
 // header_section.dart
-import 'package:Sovarvo/layout/home_screen.dart';
-import 'package:Sovarvo/modules/home%20after%20register/home_after_register.dart';
+import 'package:Sovarvo/layout/home_Screen_mobile.dart';
+import 'package:Sovarvo/modules/home%20after%20register/home_after_register_mobile.dart';
 import 'package:Sovarvo/modules/realtime_firebase/users.dart';
 import 'package:flutter/material.dart';
 import 'package:Sovarvo/shared/my_theme.dart';
 
-class VideoGamesHeader extends StatelessWidget {
+class VideoGamesHeaderMobile extends StatelessWidget {
   final int cartCountItems;
   final TextEditingController searchText;
   final Function(String) onSearchChanged;
   final VoidCallback onCartPressed;
 
-  VideoGamesHeader({
+  VideoGamesHeaderMobile({
     required this.cartCountItems,
     required this.searchText,
     required this.onSearchChanged,
@@ -38,11 +38,11 @@ class VideoGamesHeader extends StatelessWidget {
                   onTap: () {
                     if (user?.uid == null) {
                       Navigator.of(context).pushNamed(
-                          HomeScreen.route);
+                          HomeScreenMobile.route);
                     }
                     else{
                       Navigator.of(context).pushNamed(
-                          HomeAfterRegister.route);
+                          HomeAfterRegisterMobile.route);
                     }
                   },
                   child: Container(
@@ -64,15 +64,15 @@ class VideoGamesHeader extends StatelessWidget {
                         icon: Icon(
                           Icons.shopping_cart,
                           color: Colors.white,
-                          size: MediaQuery.of(context).size.width * 0.03,
+                          size: MediaQuery.of(context).size.width * 0.07,
                         )),
                     if(cartCountItems != 0)
                       CircleAvatar(
-                        radius: 10,
+                        radius: 8,
                         backgroundColor: MyThemeData.primaryColor,
                         child: Text(
                           cartCountItems.toString(),
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white, fontSize: 12),
                         ),
                       ),
                   ],
@@ -87,14 +87,13 @@ class VideoGamesHeader extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).size.width * 0.015,
+                      fontSize: MediaQuery.of(context).size.width * 0.02,
                     )),
               ],
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
             Row(
               children: [
-                Spacer(),
                 Expanded(
                   child: TextField(
                     controller: searchText,
@@ -117,10 +116,9 @@ class VideoGamesHeader extends StatelessWidget {
                     ),
                   ),
                 ),
-                Spacer(),
               ],
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
           ],
         ),
       ),

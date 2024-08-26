@@ -92,7 +92,7 @@ class _CompleteRegisterMobileState extends State<CompleteRegisterMobile> {
                           lableText: "Full Name"),
                       defaultTextFeild(
                         autofill: [AutofillHints.email],
-                          readOnly: true,
+                          readOnly: false,
                           validateFunction: (p0) {
                             if (p0 != null && p0.isEmpty) {
                               return "Please enter your e-mail";

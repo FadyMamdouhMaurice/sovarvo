@@ -1,3 +1,4 @@
+import 'package:Sovarvo/modules/rent_video_games/rent_video_games_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:Sovarvo/modules/home%20screen/appbar_home_mobile.dart';
 import 'package:Sovarvo/modules/home%20screen/bottom_navigation_bar.dart';
@@ -62,8 +63,27 @@ class HomeAfterRegisterMobile extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(10)),
                                     backgroundColor: MyThemeData.primaryColor,
                                   ),
-                                  child: Text("Make an order",style:
-                                  Theme.of(context).textTheme.labelSmall)),
+                                  child: Text("Rent consoles",style:
+                                  Theme.of(context).textTheme.labelSmall, textAlign: TextAlign.center,)),
+                            ),
+                            SizedBox(
+                                height: MediaQuery.of(context).size.height * 0.07),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              height: MediaQuery.of(context).size.height * 0.08,
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed(
+                                      RentVideoGamesMobile.route,
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10)),
+                                    backgroundColor: MyThemeData.primaryColor,
+                                  ),
+                                  child: Text("Rent & Buy video games",style:
+                                  Theme.of(context).textTheme.labelSmall, textAlign: TextAlign.center,)),
                             ),
                           ],
                         ),
