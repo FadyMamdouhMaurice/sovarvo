@@ -53,9 +53,9 @@ dependencies:
   http: ^1.2.0
   awesome_notifications: ^0.9.3+1
   awesome_dialog: ^3.2.0
+  googleapis_auth: ^1.6.0
   #google_sign_in: ^6.2.1
   #googleapis: ^13.1.0
-  #googleapis_auth: ^1.6.0
   #path: ^1.8.3
   #file_picker: ^8.0.0
   #flutter_secure_storage: ^9.2.2
